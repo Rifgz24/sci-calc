@@ -1,4 +1,4 @@
-# Engineering Scientific Calculator
+# Scientific Calculator
 
 Modern scientific calculator for engineering, mathematics, and technical work.
 
