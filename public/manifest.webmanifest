@@ -1,0 +1,17 @@
+{
+  "name": "Engineering Scientific Calculator",
+  "short_name": "Engineering Calc",
+  "description": "Advanced scientific calculator with engineering tools, statistics, matrices, vectors, complex numbers, calculus, unit conversion, and currency converter.",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [
+    { "src": "/calc.png", "sizes": "1248x1248", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "categories": ["utilities", "productivity", "education"],
+  "orientation": "any"
+}
