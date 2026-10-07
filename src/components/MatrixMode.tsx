@@ -28,7 +28,13 @@ export default function MatrixMode() {
 
   return <div className="matrix-mode">
     <div className="stat-panel">
-      <label>Matrix A (rows: 1,2;3,4)<textarea value={matrixA} onChange={e => setMatrixA(e.target.value)} placeholder="1,2;3,4" rows={2} /></label>
+            <label>Matrix size<select value={operation} onChange={e => setOperation(e.target.value as MatrixOp)}>
+          <option value="2x2">2×2</option>
+          <option value="3x3">3×3</option>
+          <option value="4x4">4×4</option>
+          <option value="other">OTHER</option>
+        </select></label>
+        <label>Matrix A (rows: 1,2;3,4)<textarea value={matrixA} onChange={e => setMatrixA(e.target.value)} placeholder="1,2;3,4" rows={2} /></label>
       <label>Operation<select value={operation} onChange={e => setOperation(e.target.value as MatrixOp)}>
         <option value="add">A + B</option>
         <option value="subtract">A − B</option>

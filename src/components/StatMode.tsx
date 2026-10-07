@@ -47,7 +47,9 @@ export default function StatMode({  }: StatModeProps) {
       <button onClick={calculateUnivariate}>Calculate Stats</button>
     </div>}
 
-    {tab === 'univariate' && univariateStat && <div className="stat-results">
+    {tab === 'univariate' && (
+        univariateStat ? <div className="stat-results"> : <div className="stat-results"><div className="stat-row"><span>Info</span><strong>Enter data and calculate</strong></div></div>
+      )}
       <div className="stat-row"><span>n</span><strong>{univariateStat.count}</strong></div>
       <div className="stat-row"><span>Σx</span><strong>{univariateStat.sum.toFixed(6)}</strong></div>
       <div className="stat-row"><span>Σx²</span><strong>{univariateStat.sumSquares.toFixed(6)}</strong></div>

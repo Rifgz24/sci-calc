@@ -9,7 +9,7 @@ export type VariableScope = Record<string, number>
 const toRadians = (value: number, unit: AngleUnit) => unit === 'DEG' ? value * Math.PI / 180 : unit === 'GRAD' ? value * Math.PI / 200 : value
 const fromRadians = (value: number, unit: AngleUnit) => unit === 'DEG' ? value * 180 / Math.PI : unit === 'GRAD' ? value * 200 / Math.PI : value
 
-export const factorial = (value: number) => {
+export const inverseTrig = (value:number)=>Math.atan(value)
   if (!Number.isInteger(value) || value < 0 || value > 170) throw new Error('Math Error')
   let result = 1
   for (let index = 2; index <= value; index += 1) result *= index
