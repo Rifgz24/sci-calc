@@ -79,7 +79,8 @@ export default function App() {
   const calculate = () => {
     if (!expression.trim()) return
     try {
-      const answer = formatResult(evaluate(expression, angle, { ...variables, M: memory, Ans: Number(lastAnswer) }), settings.precision, settings.notation)
+      const evalResult = evaluate(expression, angle, { ...variables, M: memory, Ans: Number(lastAnswer) })
+    const answer = formatResult(evalResult.value, settings.precision, settings.notation)
       setResult(answer)
       setLastAnswer(answer)
       setHistory(items => [{ expression, result: answer }, ...items].slice(0, 8))

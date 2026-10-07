@@ -5,7 +5,7 @@ export interface StatModeProps { }
 
 type StatTab = 'data' | 'univariate' | 'regression'
 
-export default function StatMode({  }: StatModeProps) {
+export default function StatMode({ }: StatModeProps) {
   const [dataInput, setDataInput] = useState('')
   const [regressionX, setRegressionX] = useState('')
   const [regressionY, setRegressionY] = useState('')
@@ -48,18 +48,18 @@ export default function StatMode({  }: StatModeProps) {
     </div>}
 
     {tab === 'univariate' && (
-        univariateStat ? <div className="stat-results"> : <div className="stat-results"><div className="stat-row"><span>Info</span><strong>Enter data and calculate</strong></div></div>
-      )}
-      <div className="stat-row"><span>n</span><strong>{univariateStat.count}</strong></div>
-      <div className="stat-row"><span>Σx</span><strong>{univariateStat.sum.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>Σx²</span><strong>{univariateStat.sumSquares.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>Mean</span><strong>{univariateStat.mean.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>σ (pop)</span><strong>{univariateStat.standardDeviation.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>σ (sample)</span><strong>{univariateStat.sampleStandardDeviation.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>Min</span><strong>{univariateStat.minimum.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>Max</span><strong>{univariateStat.maximum.toFixed(6)}</strong></div>
-      <div className="stat-row"><span>Range</span><strong>{univariateStat.range.toFixed(6)}</strong></div>
-    </div>}
+      univariateStat ? <div className="stat-results">
+        <div className="stat-row"><span>n</span><strong>{univariateStat.count}</strong></div>
+        <div className="stat-row"><span>Σx</span><strong>{univariateStat.sum.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>Σx²</span><strong>{univariateStat.sumSquares.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>Mean</span><strong>{univariateStat.mean.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>σ (pop)</span><strong>{univariateStat.standardDeviation.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>σ (sample)</span><strong>{univariateStat.sampleStandardDeviation.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>Min</span><strong>{univariateStat.minimum.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>Max</span><strong>{univariateStat.maximum.toFixed(6)}</strong></div>
+        <div className="stat-row"><span>Range</span><strong>{univariateStat.range.toFixed(6)}</strong></div>
+      </div> : <div className="stat-results"><div className="stat-row"><span>Info</span><strong>Enter data and calculate</strong></div></div>
+    )}
 
     {tab === 'regression' && <div className="stat-panel">
       <label>X values<textarea value={regressionX} onChange={e => setRegressionX(e.target.value)} placeholder="1 2 3 4 5" rows={2} /></label>
