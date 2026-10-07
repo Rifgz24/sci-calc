@@ -6,57 +6,64 @@ on:
       - 'V2'
 
 jobs:
-  build:
+  build-android:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - name: Install deps
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
         run: npm ci
-      - name: Build web
+
+      - name: Build web assets
         run: npm run build
-      - name: Sync Capacitor Android
-        run: npx cap sync android
-      - name: Set up JDK
+
+      - name: Install Capacitor CLI
+        run: npm install @capacitor/cli@latest
+
+      - name: Sync web assets to Android
+        run: npx cap copy android
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Build Android APK
+
+      - name: Build Android release APK
         run: |
-          cd android && ./gradlew assembleRelease
+          cd android
+          ./gradlew assembleRelease
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: apk
+          name: android-apk
           path: android/app/build/outputs/apk/release/*.apk
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download APK
-        uses: actions/download-artifact@v4
-        with:
-          name: apk
-      - name: Create Release
+          if-no-files-found: error
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD~1 || echo '')
+          if [ -z "$PREV_TAG" ]; then
+            echo "body=$(git log --pretty=format:"- %s (%h)" HEAD)" >> $GITHUB_OUTPUT
+          else
+            echo "body=$(git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" )" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: V2
-          name: "Calculator V2: Exact Values & Enhanced Matrix Tools"
-          body: |
-            ### 🚀 New Features
-            *   **Exact Math Engine**: Trigonometric functions now return exact values (fractions/roots) alongside decimals.
-            *   **Advanced Matrix Tools**:
-                *   New size presets: 2×2, 3×3, 4×4.
-                *   Dual-mode output: See results in both decimal and fractional forms.
-            *   **Extended Stats**: Enhanced "1-Var Stats" interface with data persistence.
-            *   **Expanded Functions**: Added Inverse Tangent (tan⁻¹) support.
-
-            ### 🛠 Improvements
-            *   Cleaner UI state handling for Statistics and Matrix modes.
-            *   Better result formatting for complex calculations.
-          files: "android/app/build/outputs/apk/release/*.apk"
+          name: V2 Release
+          body: ${{ steps.changelog.outputs.body }}
+          files: android/app/build/outputs/apk/release/*.apk
