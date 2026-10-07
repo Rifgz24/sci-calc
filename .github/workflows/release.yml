@@ -41,11 +41,17 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: V2
-          name: V2 – stats placeholder, matrix size selector, exact trig & fractions
+          name: "Calculator V2: Exact Values & Enhanced Matrix Tools"
           body: |
-            - Stats tab placeholder when no data.
-            - Matrix size selector (2×2, 3×3, 4×4, OTHER).
-            - Matrix results show decimal and fraction forms.
-            - Trigonometric functions return exact values (roots, fractions) plus decimal.
-            - Added arctan (tan⁻¹) support.
-          files: android/app/build/outputs/apk/release/*.apk
+            ### 🚀 New Features
+            *   **Exact Math Engine**: Trigonometric functions now return exact values (fractions/roots) alongside decimals.
+            *   **Advanced Matrix Tools**:
+                *   New size presets: 2×2, 3×3, 4×4.
+                *   Dual-mode output: See results in both decimal and fractional forms.
+            *   **Extended Stats**: Enhanced "1-Var Stats" interface with data persistence.
+            *   **Expanded Functions**: Added Inverse Tangent (tan⁻¹) support.
+
+            ### 🛠 Improvements
+            *   Cleaner UI state handling for Statistics and Matrix modes.
+            *   Better result formatting for complex calculations.
+          files: "*.apk"
