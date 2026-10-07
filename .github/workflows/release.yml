@@ -1,0 +1,51 @@
+name: Build & Release V2
+
+on:
+  push:
+    tags:
+      - 'V2'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install deps
+        run: npm ci
+      - name: Build web
+        run: npm run build
+      - name: Sync Capacitor Android
+        run: npx cap sync android
+      - name: Build Android APK
+        run: |
+          cd android && ./gradlew assembleRelease
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: android/app/build/outputs/apk/release/*.apk
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: apk
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: V2
+          name: V2 – stats placeholder, matrix size selector, exact trig & fractions
+          body: |
+            - Stats tab placeholder when no data.
+            - Matrix size selector (2×2, 3×3, 4×4, OTHER).
+            - Matrix results show decimal and fraction forms.
+            - Trigonometric functions return exact values (roots, fractions) plus decimal.
+            - Added arctan (tan⁻¹) support.
+          files: android/app/build/outputs/apk/release/*.apk
