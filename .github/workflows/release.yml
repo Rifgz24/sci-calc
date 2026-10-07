@@ -21,6 +21,11 @@ jobs:
         run: npm run build
       - name: Sync Capacitor Android
         run: npx cap sync android
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Build Android APK
         run: |
           cd android && ./gradlew assembleRelease
@@ -54,4 +59,4 @@ jobs:
             ### 🛠 Improvements
             *   Cleaner UI state handling for Statistics and Matrix modes.
             *   Better result formatting for complex calculations.
-          files: "*.apk"
+          files: "android/app/build/outputs/apk/release/*.apk"
